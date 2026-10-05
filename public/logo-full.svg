@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 100" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient: Rich Festive Crimson -->
+    <linearGradient id="fullBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E82C4A" />
+      <stop offset="50%" stop-color="#CF1B38" />
+      <stop offset="100%" stop-color="#A81028" />
+    </linearGradient>
+
+    <linearGradient id="fullTopShine" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="fullRibbonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#F8FAFC" />
+    </linearGradient>
+
+    <linearGradient id="fullGoldGrad" x1="30%" y1="20%" x2="80%" y2="90%">
+      <stop offset="0%" stop-color="#FDE047" />
+      <stop offset="45%" stop-color="#EAB308" />
+      <stop offset="100%" stop-color="#CA8A04" />
+    </linearGradient>
+
+    <filter id="fullShadow" x="-10%" y="-10%" width="120%" height="125%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#5C0615" flood-opacity="0.22" />
+    </filter>
+  </defs>
+
+  <!-- Logo Mark (Icon) 80x80 positioned at (10, 10) -->
+  <g transform="translate(10, 10)">
+    <!-- Base Squircle -->
+    <rect x="2" y="2" width="76" height="76" rx="20" ry="20" fill="url(#fullBgGrad)" filter="url(#fullShadow)" />
+    <rect x="3" y="3" width="74" height="74" rx="19" ry="19" fill="none" stroke="url(#fullTopShine)" stroke-width="1.2" />
+
+    <!-- 4 Ribbon Petal Loops centered at (40, 40) -->
+    <g>
+      <!-- Top Loop -->
+      <path d="M40 40 C32 23 27 13 40 12 C53 13 48 23 40 40 Z" fill="url(#fullRibbonGrad)" />
+      <!-- Bottom Loop -->
+      <path d="M40 40 C32 57 27 67 40 68 C53 67 48 57 40 40 Z" fill="url(#fullRibbonGrad)" />
+      <!-- Left Loop -->
+      <path d="M40 40 C23 32 13 27 12 40 C13 53 23 48 40 40 Z" fill="url(#fullRibbonGrad)" />
+      <!-- Right Loop -->
+      <path d="M40 40 C57 32 67 27 68 40 C67 53 57 48 40 40 Z" fill="url(#fullRibbonGrad)" />
+
+      <!-- Inner Depth -->
+      <circle cx="40" cy="40" r="8" fill="#A81028" opacity="0.25" />
+
+      <!-- Center Gold Dot -->
+      <circle cx="40" cy="40" r="6.5" fill="url(#fullGoldGrad)" />
+      <circle cx="40" cy="40" r="5.5" fill="none" stroke="#FEF08A" stroke-width="0.8" opacity="0.8" />
+      <ellipse cx="38" cy="38" rx="1.8" ry="1.2" transform="rotate(-30 38 38)" fill="#FFFFFF" opacity="0.85" />
+    </g>
+  </g>
+
+  <!-- Typography: Trợ Lý Tìm Quà -->
+  <g transform="translate(106, 0)">
+    <!-- Title -->
+    <text x="0" y="52" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="34" font-weight="800" fill="#B21E36" letter-spacing="-0.5">
+      Trợ Lý Tìm Quà
+    </text>
+    <!-- Tagline -->
+    <text x="2" y="76" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#6B4B4E" letter-spacing="1.2">
+      GỢI Ý CHUẨN GU • TIKTOK &amp; SHOPEE
+    </text>
+  </g>
+</svg>
