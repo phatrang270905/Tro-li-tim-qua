@@ -3,7 +3,11 @@
 Website gợi ý quà tặng (cho người yêu, bố mẹ, đồng nghiệp…) kèm link mua trên Shopee và TikTok Shop.
 Trang có sẵn một **chatbot gợi ý quà** ở góc phải dưới màn hình. Chatbot chạy hoàn toàn miễn phí, không cần tài khoản hay khoá API nào.
 
+🌐 **Web đang chạy tại:** https://tro-li-tim-qua.phatrang270905.workers.dev
+📦 **Code trên GitHub:** https://github.com/phatrang270905/Tro-li-tim-qua
+
 Tài liệu này hướng dẫn từng bước để bạn **tải code về máy và chạy website**. Bạn không cần biết lập trình, chỉ cần làm đúng theo thứ tự. Lần đầu mất khoảng 15–20 phút.
+Nếu chỉ muốn xem web thì không cần làm gì cả, cứ mở link ở trên.
 
 ---
 
@@ -16,7 +20,9 @@ Tài liệu này hướng dẫn từng bước để bạn **tải code về má
 5. [Chạy website](#bước-5--chạy-website-)
 6. [Những lần sau chạy lại thế nào?](#những-lần-sau-chạy-lại-thế-nào)
 7. [Sửa sản phẩm, link mua và chatbot](#sửa-sản-phẩm-link-mua-và-chatbot)
-8. [Gặp lỗi thì làm gì?](#gặp-lỗi-thì-làm-gì)
+8. [Cập nhật web đang chạy trên mạng](#cập-nhật-web-đang-chạy-trên-mạng)
+9. [Gặp lỗi thì làm gì?](#gặp-lỗi-thì-làm-gì)
+10. [(Dành cho người phụ trách) Cấu hình deploy](#dành-cho-người-phụ-trách-cấu-hình-deploy)
 
 ---
 
@@ -68,18 +74,18 @@ Chọn **một trong hai cách** dưới đây.
 
 ### Cách A — Tải file ZIP (dễ nhất, không cần Git)
 
-1. Mở trang GitHub của dự án (người quản lý dự án sẽ gửi link cho bạn).
+1. Mở trang GitHub của dự án: https://github.com/phatrang270905/Tro-li-tim-qua
 2. Bấm nút màu xanh **`<> Code`** → chọn **Download ZIP**.
 3. Tìm file ZIP vừa tải (thường nằm trong thư mục *Downloads*), bấm chuột phải → **Extract All… (Giải nén tất cả)**.
 4. Chuyển thư mục vừa giải nén tới chỗ dễ tìm, ví dụ `D:\Tro-li-tim-qua`.
 
 ### Cách B — Dùng Git (dễ cập nhật về sau)
 
-Trong cửa sổ dòng lệnh, gõ 2 lệnh sau. Thay `<LINK-GITHUB>` bằng link dự án mà người quản lý gửi cho bạn:
+Trong cửa sổ dòng lệnh, gõ 2 lệnh sau:
 
 ```
 cd Desktop
-git clone <LINK-GITHUB> Tro-li-tim-qua
+git clone https://github.com/phatrang270905/Tro-li-tim-qua.git Tro-li-tim-qua
 ```
 
 Code sẽ được tải vào thư mục **Tro-li-tim-qua** trên màn hình Desktop.
@@ -139,7 +145,8 @@ Website đã chạy trên máy bạn 🎉. Hãy thử bấm nút 🎁 màu đỏ
 ### Lưu ý quan trọng
 - **Không tắt cửa sổ dòng lệnh** khi đang xem web. Tắt nó đi thì web cũng dừng.
 - Muốn **dừng web**: bấm vào cửa sổ dòng lệnh rồi nhấn `Ctrl + C`. Nếu máy hỏi `Terminate batch job (Y/N)?` thì gõ `Y` rồi bấm `Enter`.
-- Địa chỉ `localhost` **chỉ mở được trên máy của bạn**, người khác không vào được.
+- Địa chỉ `localhost` **chỉ mở được trên máy của bạn**, người khác không vào được. Muốn gửi web cho người khác xem, hãy dùng link https://tro-li-tim-qua.phatrang270905.workers.dev
+- Những gì bạn sửa trên máy **chưa xuất hiện trên link web thật** cho tới khi bạn đẩy code lên GitHub (xem [Cập nhật web đang chạy trên mạng](#cập-nhật-web-đang-chạy-trên-mạng)).
 
 ---
 
@@ -188,6 +195,36 @@ shopeeUrl: 'https://shopee.vn/link-san-pham-that-cua-ban',
 
 ---
 
+## Cập nhật web đang chạy trên mạng
+
+Web thật được **Cloudflare** tự động cập nhật mỗi khi có code mới trên nhánh `main` của GitHub. Bạn không cần đăng nhập Cloudflare hay upload file gì cả.
+
+> Phần này cần **Git** (Bước 1.2), và tài khoản GitHub của bạn phải có quyền đẩy code lên dự án.
+
+**1. Kiểm tra trên máy trước.** Chạy `npm run dev` và xem web ở http://localhost:3000 đã đúng như ý chưa.
+
+**2. Kiểm tra web có đóng gói được không.** Gõ:
+
+```
+npm run build
+```
+
+Nếu cuối cùng hiện dòng `✓ built in ...` là ổn ✅. Nếu có chữ đỏ báo lỗi thì **dừng lại và sửa trước**, vì nếu đẩy lên, Cloudflare cũng sẽ báo lỗi y như vậy.
+
+**3. Đẩy code lên GitHub.** Gõ lần lượt 3 lệnh, thay phần trong ngoặc kép bằng mô tả ngắn về những gì bạn đã sửa:
+
+```
+git add .
+git commit -m "Cập nhật link Shopee cho sản phẩm"
+git push
+```
+
+**4. Chờ khoảng 1–2 phút** rồi mở lại https://tro-li-tim-qua.phatrang270905.workers.dev. Nếu chưa thấy thay đổi, nhấn `Ctrl + F5` để tải lại trang.
+
+> 💡 Nếu sau 5 phút web vẫn chưa đổi, có thể bước đóng gói trên Cloudflare đã lỗi. Hãy báo người phụ trách kỹ thuật kiểm tra (xem [phần cuối](#dành-cho-người-phụ-trách-cấu-hình-deploy)). Trong lúc đó web vẫn chạy bản cũ, không bị sập.
+
+---
+
 ## Gặp lỗi thì làm gì?
 
 | Hiện tượng | Cách xử lý |
@@ -200,18 +237,42 @@ shopeeUrl: 'https://shopee.vn/link-san-pham-that-cua-ban',
 | `Port 3000 is already in use` | Web đang chạy ở một cửa sổ dòng lệnh khác. Đóng cửa sổ đó (hoặc nhấn `Ctrl + C` trong đó) rồi chạy lại. |
 | Vào `localhost:3000` thấy *"This site can't be reached"* | Lệnh `npm run dev` chưa chạy hoặc đã bị tắt. Mở lại cửa sổ dòng lệnh và chạy lại. |
 | Trang hiện trắng tinh sau khi sửa file | Có thể bạn vừa sửa sai cú pháp. Xem dòng chữ đỏ trong cửa sổ dòng lệnh để biết file nào lỗi, hoặc bấm `Ctrl + Z` trong file vừa sửa. |
+| `git push` báo `rejected` hoặc `fetch first` | Trên GitHub đã có code mới hơn máy bạn. Gõ `git pull` trước rồi `git push` lại. |
+| `git push` báo `Permission denied` hoặc `403` | Tài khoản GitHub của bạn chưa có quyền đẩy code lên dự án. Nhờ chủ dự án thêm bạn làm cộng tác viên (*Collaborator*). |
+| Đã `git push` nhưng web thật không đổi | Nhấn `Ctrl + F5` để tải lại. Vẫn không đổi thì báo người phụ trách kiểm tra log trên Cloudflare. |
 
 Vẫn chưa xử lý được? Hãy **chụp màn hình cửa sổ dòng lệnh** (nhất là các dòng chữ đỏ) và gửi cho người phụ trách kỹ thuật.
 
 ---
 
-## (Dành cho người phụ trách) Đưa web lên mạng
+## (Dành cho người phụ trách) Cấu hình deploy
 
-Muốn đóng gói web để đưa lên hosting, chạy lệnh:
+Web là trang tĩnh (React + Vite) và được host **miễn phí** trên **Cloudflare Workers** (static assets), có kết nối Git với repo GitHub.
+Web **không cần** khoá API hay file `.env` nào để chạy. Các file `.env.example` và `metadata.json` là phần thừa từ Google AI Studio, không được dùng tới.
+
+| Mục | Giá trị |
+|---|---|
+| Link production | https://tro-li-tim-qua.phatrang270905.workers.dev |
+| Quản lý ở | Cloudflare Dashboard → **Compute → Workers & Pages → `tro-li-tim-qua`** |
+| Nhánh tự deploy | `main` (đẩy code lên nhánh khác sẽ tạo link xem thử riêng) |
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy` |
+| Thư mục kết quả | `dist/` |
+| Phiên bản Node | 22 (khai báo trong file `.nvmrc`) |
+
+Các file liên quan trong repo:
+- **`wrangler.jsonc`**: cấu hình Cloudflare (tên Worker, thư mục `dist`, bật link `workers.dev` và link xem thử). Nếu thiếu file này, mỗi lần build Cloudflare sẽ tự cài thêm `wrangler` và `@cloudflare/vite-plugin`, chậm hơn và dễ lỗi hơn. **Không nên xoá.**
+- **`.nvmrc`**: buộc máy build dùng Node 22, vì Vite 8 cần Node ≥ 20.19.
+
+**Xem log hoặc quay lại bản cũ:** vào Cloudflare Dashboard → `tro-li-tim-qua` → tab **Deployments**. Mỗi lần deploy có log riêng. Nếu bản mới bị lỗi, chọn một bản cũ và bấm **Rollback**.
+
+**Deploy thủ công từ máy** (khi không muốn chờ GitHub, hoặc để kiểm tra trước):
 
 ```
 npm run build
+npx wrangler deploy --dry-run   # chỉ kiểm tra cấu hình, không deploy
+npx wrangler login              # lần đầu: đăng nhập Cloudflare qua trình duyệt
+npx wrangler deploy             # deploy thật
 ```
 
-Kết quả nằm trong thư mục `dist/`. Đây là web tĩnh, có thể đưa lên các dịch vụ miễn phí như **Vercel**, **Netlify** hoặc **GitHub Pages**.
-Web **không cần** khoá API hay file `.env` nào để chạy.
+**Gắn tên miền riêng:** Cloudflare Dashboard → `tro-li-tim-qua` → **Settings → Domains & Routes → Add → Custom domain**. HTTPS được cấp miễn phí.
