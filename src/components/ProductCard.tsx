@@ -1,5 +1,6 @@
 import React from 'react';
 import { Product } from '../types';
+import { trackBuyClick } from '../utils/analytics';
 
 interface ProductCardProps {
   product: Product;
@@ -146,6 +147,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       <div className="flex flex-col gap-2 pt-1 mt-auto">
         <a
           href={product.shopeeUrl}
+          onClick={() => trackBuyClick(product, 'shopee', 'product_card')}
           target="_blank"
           rel="noopener noreferrer"
           className="w-full py-2.5 px-3 rounded-full bg-[#ff5722] hover:bg-[#b02f00] text-white text-xs font-bold flex items-center justify-between shadow-xs transition-transform active:scale-98"
@@ -159,6 +161,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         <a
           href={product.tiktokUrl}
+          onClick={() => trackBuyClick(product, 'tiktok', 'product_card')}
           target="_blank"
           rel="noopener noreferrer"
           className="w-full py-2 px-3 rounded-full bg-[#f4ece8] hover:bg-[#eee7e3] text-[#1e1b19] text-xs font-bold flex items-center justify-between transition-colors active:scale-98"

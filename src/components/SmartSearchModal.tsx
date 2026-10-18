@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from '../types';
+import { trackSearch } from '../utils/analytics';
 import { performSmartSearch, VIETNAMESE_HOLIDAYS, SearchResultItem } from '../utils/searchEngine';
 
 interface SmartSearchModalProps {
@@ -161,6 +162,7 @@ export const SmartSearchModal: React.FC<SmartSearchModalProps> = ({
                 <div
                   key={product.id}
                   onClick={() => {
+                    trackSearch(query || activeHoliday || '');
                     onSelectProduct(product);
                     onClose();
                   }}
@@ -275,6 +277,7 @@ export const SmartSearchModal: React.FC<SmartSearchModalProps> = ({
           {onShowAllResults && searchResults.length > 0 && (
             <button
               onClick={() => {
+                trackSearch(query || activeHoliday || '');
                 onShowAllResults(query || activeHoliday || '');
                 onClose();
               }}

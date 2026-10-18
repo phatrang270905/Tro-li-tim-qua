@@ -3,7 +3,7 @@
 Website gợi ý quà tặng (cho người yêu, bố mẹ, đồng nghiệp…) kèm link mua trên Shopee và TikTok Shop.
 Trang có sẵn một **chatbot gợi ý quà** ở góc phải dưới màn hình. Chatbot chạy hoàn toàn miễn phí, không cần tài khoản hay khoá API nào.
 
-🌐 **Web đang chạy tại:** https://tro-li-tim-qua.phatrang270905.workers.dev
+🌐 **Web đang chạy tại:** https://tro-li-tim-qua.online
 📦 **Code trên GitHub:** https://github.com/phatrang270905/Tro-li-tim-qua
 
 Tài liệu này hướng dẫn từng bước để bạn **tải code về máy và chạy website**. Bạn không cần biết lập trình, chỉ cần làm đúng theo thứ tự. Lần đầu mất khoảng 15–20 phút.
@@ -145,7 +145,7 @@ Website đã chạy trên máy bạn 🎉. Hãy thử bấm nút 🎁 màu đỏ
 ### Lưu ý quan trọng
 - **Không tắt cửa sổ dòng lệnh** khi đang xem web. Tắt nó đi thì web cũng dừng.
 - Muốn **dừng web**: bấm vào cửa sổ dòng lệnh rồi nhấn `Ctrl + C`. Nếu máy hỏi `Terminate batch job (Y/N)?` thì gõ `Y` rồi bấm `Enter`.
-- Địa chỉ `localhost` **chỉ mở được trên máy của bạn**, người khác không vào được. Muốn gửi web cho người khác xem, hãy dùng link https://tro-li-tim-qua.phatrang270905.workers.dev
+- Địa chỉ `localhost` **chỉ mở được trên máy của bạn**, người khác không vào được. Muốn gửi web cho người khác xem, hãy dùng link https://tro-li-tim-qua.online
 - Những gì bạn sửa trên máy **chưa xuất hiện trên link web thật** cho tới khi bạn đẩy code lên GitHub (xem [Cập nhật web đang chạy trên mạng](#cập-nhật-web-đang-chạy-trên-mạng)).
 
 ---
@@ -193,6 +193,14 @@ shopeeUrl: 'https://shopee.vn/link-san-pham-that-cua-ban',
 
 > ⚠️ **Giữ nguyên dấu nháy đơn `' '` và dấu phẩy `,` ở cuối dòng.** Nếu xoá nhầm, website sẽ báo lỗi. Khi đó bấm `Ctrl + Z` để hoàn tác.
 
+### Quy tắc về dòng `id:` của sản phẩm
+
+Mỗi sản phẩm có một dòng `id:` (ví dụ `id: 'moon-lamp-3d',`). Google Analytics dùng mã này để đếm lượt bấm mua của từng sản phẩm.
+
+- Được thoải mái đổi tên, giá, ảnh, link Shopee / TikTok, nhưng **giữ nguyên `id`**. Khi đó số liệu cũ và mới của sản phẩm vẫn được gộp chung.
+- Thêm sản phẩm mới thì đặt `id` **mới, không trùng** với sản phẩm khác, viết không dấu và nối bằng gạch ngang, ví dụ `id: 'binh-giu-nhiet-inox',`.
+- Đổi link mua, thêm hoặc xoá sản phẩm đều **không cần sửa gì** cho Google Analytics.
+
 ---
 
 ## Cập nhật web đang chạy trên mạng
@@ -219,7 +227,7 @@ git commit -m "Cập nhật link Shopee cho sản phẩm"
 git push
 ```
 
-**4. Chờ khoảng 1–2 phút** rồi mở lại https://tro-li-tim-qua.phatrang270905.workers.dev. Nếu chưa thấy thay đổi, nhấn `Ctrl + F5` để tải lại trang.
+**4. Chờ khoảng 1–2 phút** rồi mở lại https://tro-li-tim-qua.online. Nếu chưa thấy thay đổi, nhấn `Ctrl + F5` để tải lại trang.
 
 > 💡 Nếu sau 5 phút web vẫn chưa đổi, có thể bước đóng gói trên Cloudflare đã lỗi. Hãy báo người phụ trách kỹ thuật kiểm tra (xem [phần cuối](#dành-cho-người-phụ-trách-cấu-hình-deploy)). Trong lúc đó web vẫn chạy bản cũ, không bị sập.
 
@@ -252,7 +260,8 @@ Web **không cần** khoá API hay file `.env` nào để chạy. Các file `.en
 
 | Mục | Giá trị |
 |---|---|
-| Link production | https://tro-li-tim-qua.phatrang270905.workers.dev |
+| Link production | https://tro-li-tim-qua.online (và `www.tro-li-tim-qua.online`) |
+| Link dự phòng | https://tro-li-tim-qua.phatrang270905.workers.dev |
 | Quản lý ở | Cloudflare Dashboard → **Compute → Workers & Pages → `tro-li-tim-qua`** |
 | Nhánh tự deploy | `main` (đẩy code lên nhánh khác sẽ tạo link xem thử riêng) |
 | Build command | `npm run build` |
@@ -261,7 +270,7 @@ Web **không cần** khoá API hay file `.env` nào để chạy. Các file `.en
 | Phiên bản Node | 22 (khai báo trong file `.nvmrc`) |
 
 Các file liên quan trong repo:
-- **`wrangler.jsonc`**: cấu hình Cloudflare (tên Worker, thư mục `dist`, bật link `workers.dev` và link xem thử). Nếu thiếu file này, mỗi lần build Cloudflare sẽ tự cài thêm `wrangler` và `@cloudflare/vite-plugin`, chậm hơn và dễ lỗi hơn. **Không nên xoá.**
+- **`wrangler.jsonc`**: cấu hình Cloudflare (tên Worker, thư mục `dist`, tên miền riêng trong mục `routes`, bật link `workers.dev` và link xem thử). Nếu thiếu file này, mỗi lần build Cloudflare sẽ tự cài thêm `wrangler` và `@cloudflare/vite-plugin`, chậm hơn và dễ lỗi hơn. **Không nên xoá.**
 - **`.nvmrc`**: buộc máy build dùng Node 22, vì Vite 8 cần Node ≥ 20.19.
 
 **Xem log hoặc quay lại bản cũ:** vào Cloudflare Dashboard → `tro-li-tim-qua` → tab **Deployments**. Mỗi lần deploy có log riêng. Nếu bản mới bị lỗi, chọn một bản cũ và bấm **Rollback**.
@@ -275,4 +284,42 @@ npx wrangler login              # lần đầu: đăng nhập Cloudflare qua tr�
 npx wrangler deploy             # deploy thật
 ```
 
-**Gắn tên miền riêng:** Cloudflare Dashboard → `tro-li-tim-qua` → **Settings → Domains & Routes → Add → Custom domain**. HTTPS được cấp miễn phí.
+### Tên miền `tro-li-tim-qua.online`
+
+| Mục | Giá trị |
+|---|---|
+| Mua tại | iNET (https://portal.inet.vn → **Tên miền**) |
+| Ngày hết hạn | **15/10/2027**. Gia hạn trên iNET trước ngày này, nếu không web sẽ mất tên miền |
+| Phí gia hạn | Theo bảng giá iNET (khi mua: khoảng 1.050.000đ/năm, chưa VAT) |
+| Nameserver | `dan.ns.cloudflare.com`, `summer.ns.cloudflare.com` (đã trỏ về Cloudflare) |
+| Quản lý DNS ở | Cloudflare Dashboard → **Domains → `tro-li-tim-qua.online` → DNS**. Sửa bản ghi DNS trên iNET **không có tác dụng** |
+| HTTPS | Cloudflare tự cấp và gia hạn miễn phí |
+
+Lưu ý:
+- Tên miền được gắn vào web qua mục `routes` trong `wrangler.jsonc`. Mỗi lần deploy, Cloudflare tự tạo bản ghi DNS và chứng chỉ cho các tên miền khai báo ở đó. **Không tự thêm bản ghi `A`/`CNAME`** cho `tro-li-tim-qua.online` hoặc `www` trong DNS, vì sẽ bị trùng.
+- Muốn thêm tên miền khác: thêm một dòng vào `routes` (tên miền đó phải đang được quản lý trên cùng tài khoản Cloudflare), rồi push.
+- **Không bật DNSSEC trên iNET.** Nếu muốn dùng DNSSEC, bật trong Cloudflare (**DNS → Settings**) trước, rồi mới nhập bản ghi DS mà Cloudflare cung cấp vào iNET.
+
+### Google Analytics
+
+| Mục | Giá trị |
+|---|---|
+| Measurement ID | `G-SVRJLXB4BQ` (khai báo trong `src/utils/analytics.ts`) |
+| Xem số liệu | https://analytics.google.com → **Reports**. Xem trực tiếp người đang dùng ở **Reports → Realtime** |
+| Khi nào gửi dữ liệu | Chỉ trên web thật. Chạy `npm run dev` hoặc `npm run preview` trên `localhost` **không** gửi gì, nên thử nghiệm thoải mái |
+
+Web không đổi địa chỉ khi chuyển trang, nên code tự báo cho GA một "trang ảo" mỗi lần chuyển: `/` (Trang chủ), `/nguoi-yeu`, `/dong-nghiep`, `/bo-me`. Thêm trang mới thì khai báo tên trang trong `PAGE_INFO` ở `src/utils/analytics.ts`. Nếu quên, GA vẫn ghi nhận trang với đường dẫn `/<mã trang>`.
+
+Các sự kiện được gửi:
+
+| Sự kiện | Khi nào | Thông tin kèm theo |
+|---|---|---|
+| `page_view` | Mở web hoặc chuyển trang | Trang ảo như trên |
+| `click_buy` ⭐ | Bấm nút mua Shopee / TikTok | `platform` (shopee / tiktok), `source` (product_card / product_detail / chatbot / wishlist), `product_id`, `product_name`, `price` |
+| `add_to_wishlist` | Thêm sản phẩm vào danh sách đã thích | Mã, tên, giá sản phẩm |
+| `search` | Bấm tìm, bấm thẻ gợi ý, hoặc chọn kết quả trong ô tìm kiếm | Từ khoá tìm kiếm |
+| `chatbot_message` | Gửi một tin nhắn cho chatbot | Không có. **Nội dung chat không được gửi** |
+
+Để xem được các thông tin kèm theo trong báo cáo, cần đăng ký chúng một lần ở GA → **Admin → Custom definitions → Create custom dimension** (Scope: *Event*). Đăng ký với các tham số: `platform`, `source`, `product_id`, `product_name`. Muốn GA tính lượt bấm mua là "chuyển đổi", vào **Admin → Events** (hoặc **Key events**) và đánh dấu `click_buy` là **Key event**.
+
+Chính sách bảo mật trên web (`src/components/PolicyModal.tsx`, mục 4) đã ghi rõ việc dùng Google Analytics. Nếu sau này gửi thêm loại dữ liệu mới, nhớ cập nhật lại mục này.

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Product } from '../types';
+import { trackBuyClick } from '../utils/analytics';
 
 interface WishlistDrawerProps {
   isOpen: boolean;
@@ -110,6 +111,7 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
                   <div className="flex gap-2 mt-1.5">
                     <a
                       href={item.shopeeUrl}
+                      onClick={() => trackBuyClick(item, 'shopee', 'wishlist')}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-2 py-0.5 rounded-full bg-[#ff5722] text-white text-[10px] font-bold flex items-center gap-1"
@@ -119,6 +121,7 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
                     </a>
                     <a
                       href={item.tiktokUrl}
+                      onClick={() => trackBuyClick(item, 'tiktok', 'wishlist')}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-2 py-0.5 rounded-full bg-[#1e1b19] text-white text-[10px] font-bold flex items-center gap-1"

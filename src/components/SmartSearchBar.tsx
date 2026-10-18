@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Product } from '../types';
+import { trackSearch } from '../utils/analytics';
 import { performSmartSearch, VIETNAMESE_HOLIDAYS, SearchResultItem } from '../utils/searchEngine';
 
 interface SmartSearchBarProps {
@@ -52,6 +53,7 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    trackSearch(query);
     setIsOpen(false);
     if (onSearchSubmit) {
       onSearchSubmit(query.trim());
@@ -59,6 +61,7 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
   };
 
   const handleSelectQuickTag = (tagQuery: string) => {
+    trackSearch(tagQuery);
     setQuery(tagQuery);
     if (onSearchSubmit) {
       onSearchSubmit(tagQuery);
@@ -168,6 +171,7 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
                 <div
                   key={product.id}
                   onClick={() => {
+                    trackSearch(query);
                     onSelectProduct(product);
                     setIsOpen(false);
                   }}

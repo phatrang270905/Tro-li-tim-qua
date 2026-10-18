@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Product } from '../types';
+import { trackBuyClick, trackChatbotMessage } from '../utils/analytics';
 import { BotRecommendation, ChatContext, EMPTY_CONTEXT, answerQuestion, greetingReply } from '../utils/chatbotEngine';
 
 interface GiftChatbotProps {
@@ -104,6 +105,7 @@ export const GiftChatbot: React.FC<GiftChatbotProps> = ({ products, onOpenDetail
   const sendMessage = (rawText: string) => {
     const text = rawText.trim();
     if (!text || isTyping) return;
+    trackChatbotMessage();
 
     const userMessage: ChatMessage = { id: createId(), role: 'user', text };
     setSession((prev) => ({ ...prev, messages: [...prev.messages, userMessage] }));
@@ -264,6 +266,7 @@ export const GiftChatbot: React.FC<GiftChatbotProps> = ({ products, onOpenDetail
                               <div className="flex gap-1.5 mt-2">
                                 <a
                                   href={product.shopeeUrl}
+                                  onClick={() => trackBuyClick(product, 'shopee', 'chatbot')}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="flex-1 py-1.5 px-2 rounded-full bg-[#ff5722] hover:bg-[#b02f00] text-white text-[11px] font-bold flex items-center justify-center gap-1 transition-colors"
@@ -273,6 +276,7 @@ export const GiftChatbot: React.FC<GiftChatbotProps> = ({ products, onOpenDetail
                                 </a>
                                 <a
                                   href={product.tiktokUrl}
+                                  onClick={() => trackBuyClick(product, 'tiktok', 'chatbot')}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="flex-1 py-1.5 px-2 rounded-full bg-[#f4ece8] hover:bg-[#eee7e3] text-[#1e1b19] text-[11px] font-bold flex items-center justify-center gap-1 transition-colors"

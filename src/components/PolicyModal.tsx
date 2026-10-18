@@ -58,7 +58,10 @@ export const PolicyModal: React.FC<PolicyModalProps> = ({ type, onClose }) => {
                 <strong>3. Danh sách quà đã thích (Wishlist):</strong> Danh sách các món quà yêu thích được lưu cục bộ trong bộ nhớ tạm của thiết bị (LocalStorage) để bạn tiện theo dõi lại khi quay lại trang.
               </p>
               <p>
-                <strong>4. Cam kết không bán dữ liệu:</strong> Chúng tôi cam kết tuyệt đối không bán hoặc chia sẻ email hay thông tin duyệt web của bạn cho bất kỳ bên thứ ba quảng cáo nào.
+                <strong>4. Thống kê truy cập (Google Analytics):</strong> Website sử dụng Google Analytics, dịch vụ của Google, để thống kê ẩn danh số lượt truy cập, các trang được xem, từ khoá tìm kiếm trên trang và lượt bấm vào liên kết Shopee / TikTok Shop, nhằm cải thiện chất lượng gợi ý quà. Google Analytics sử dụng cookie và có thể ghi nhận thông tin kỹ thuật như loại thiết bị, trình duyệt và khu vực gần đúng. Nội dung bạn trò chuyện với chatbot không được gửi đi. Bạn có thể từ chối bằng tiện ích chặn theo dõi của trình duyệt hoặc tiện ích Google Analytics Opt-out (tools.google.com/dlpage/gaoptout).
+              </p>
+              <p>
+                <strong>5. Cam kết không bán dữ liệu:</strong> Chúng tôi cam kết tuyệt đối không bán hoặc chia sẻ email hay thông tin duyệt web của bạn cho bất kỳ bên thứ ba quảng cáo nào.
               </p>
             </div>
           </div>

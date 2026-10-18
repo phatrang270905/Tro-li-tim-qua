@@ -12,6 +12,7 @@ import { WishlistDrawer } from './components/WishlistDrawer';
 import { PolicyModal } from './components/PolicyModal';
 import { SmartSearchModal } from './components/SmartSearchModal';
 import { GiftChatbot } from './components/GiftChatbot';
+import { trackAddToWishlist, trackPageView } from './utils/analytics';
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState<PageTab>('home');
@@ -51,6 +52,11 @@ export default function App() {
     }
   }, [wishlist]);
 
+  // Report each tab as its own page to Google Analytics (also fires on first load)
+  useEffect(() => {
+    trackPageView(currentTab);
+  }, [currentTab]);
+
   // Toast auto-clear
   useEffect(() => {
     if (!toastMessage) return;
@@ -68,6 +74,7 @@ export default function App() {
       showToast(`Đã bỏ "${product.title.slice(0, 28)}..." khỏi danh sách đã thích`);
     } else {
       setWishlist((prev) => [...prev, product]);
+      trackAddToWishlist(product);
       showToast(`💖 Đã lưu "${product.title.slice(0, 28)}..." vào danh sách đã thích!`);
     }
   };
