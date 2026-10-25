@@ -406,7 +406,7 @@ export function performSmartSearch(products: Product[], query: string): SearchRe
           reasons.push(`Quà phái đẹp dịp ${holiday.shortName}`);
         } else if (
           holiday.id === '19/11' &&
-          (normTitle.includes('nam') || normTitle.includes('cao rau') || normTitle.includes('vi da') || normTitle.includes('but') || normTitle.includes('binh giu nhiet') || normTitle.includes('tai nghe') || product.category === 'colleague')
+          (normTitle.includes('nam') || normTitle.includes('cao rau') || normTitle.includes('vi da') || normTitle.includes('but') || normTitle.includes('binh giu nhiet') || normTitle.includes('tai nghe') || product.category === 'colleague' || product.category === 'boyfriend')
         ) {
           score += 28;
           reasons.push(`Quà phái mạnh dịp 19/11`);

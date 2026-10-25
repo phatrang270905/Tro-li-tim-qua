@@ -1,4 +1,4 @@
-export type PageTab = 'home' | 'girlfriend' | 'colleague' | 'parents';
+export type PageTab = 'home' | 'girlfriend' | 'boyfriend' | 'colleague' | 'parents';
 
 export interface Product {
   id: string;
@@ -7,7 +7,9 @@ export interface Product {
   image: string;
   imageAlt: string;
   price: number;
+  priceLabel?: string;
   originalPrice: number;
+  originalPriceLabel?: string;
   discountPercent: number;
   rating: number;
   soldCount: string;
@@ -15,7 +17,7 @@ export interface Product {
   badgeType?: 'primary' | 'secondary' | 'tertiary' | 'hot' | 'trending';
   highlightTag?: string;
   psychologicalInsight: string;
-  category: 'girlfriend' | 'colleague' | 'parents' | 'all';
+  category: 'girlfriend' | 'boyfriend' | 'colleague' | 'parents' | 'all';
   recipientTypes: string[];
   occasions: string[];
   vibes: string[];

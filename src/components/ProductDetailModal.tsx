@@ -62,19 +62,23 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           {/* Details Content */}
           <div className="flex flex-col">
             <div className="flex items-center gap-1.5 text-xs text-[#5a4041] mb-2">
-              <span className="flex items-center text-amber-500 font-bold">
-                <span
-                  className="material-symbols-outlined text-[16px] mr-1"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  star
-                </span>
-                {product.rating}
-              </span>
-              <span>•</span>
-              <span>{product.soldCount}</span>
-              <span>•</span>
-              <span className="text-[#b21e36] font-semibold">Chính hãng Mall</span>
+              {product.rating > 0 && (
+                <>
+                  <span className="flex items-center text-amber-500 font-bold">
+                    <span
+                      className="material-symbols-outlined text-[16px] mr-1"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
+                      star
+                    </span>
+                    {product.rating}
+                  </span>
+                  <span>•</span>
+                  <span>{product.soldCount}</span>
+                  <span>•</span>
+                </>
+              )}
+              <span className="text-[#b21e36] font-semibold">Sản phẩm tham khảo</span>
             </div>
 
             <h2 className="text-lg md:text-xl font-extrabold text-[#1e1b19] leading-snug mb-3">
@@ -84,11 +88,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             {/* Price */}
             <div className="flex items-baseline gap-2.5 mb-4">
               <span className="text-2xl font-black text-[#b21e36]">
-                {formatVND(product.price)}
+                {product.priceLabel || formatVND(product.price)}
               </span>
               {product.originalPrice > product.price && (
                 <span className="text-sm text-[#8e7070] line-through">
-                  {formatVND(product.originalPrice)}
+                  {product.originalPriceLabel || formatVND(product.originalPrice)}
                 </span>
               )}
             </div>

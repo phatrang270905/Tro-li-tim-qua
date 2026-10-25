@@ -104,6 +104,12 @@ export const Footer: React.FC<FooterProps> = ({
                 Quà Người Yêu / Bạn Gái
               </button>
               <button
+                onClick={() => onSelectTab('boyfriend')}
+                className="text-left hover:text-[#b21e36] hover:underline transition-colors cursor-pointer"
+              >
+                Quà Người Yêu Nam
+              </button>
+              <button
                 onClick={() => onSelectTab('colleague')}
                 className="text-left hover:text-[#b21e36] hover:underline transition-colors cursor-pointer"
               >

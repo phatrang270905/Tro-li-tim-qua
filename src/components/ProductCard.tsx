@@ -91,25 +91,27 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Rating & Sold count */}
-        <div className="flex items-center justify-between text-xs text-[#5a4041] mb-1.5">
-          <div className="flex items-center gap-1">
-            <span
-              className="material-symbols-outlined text-amber-500 text-[15px]"
-              style={{ fontVariationSettings: "'FILL' 1" }}
+        {product.rating > 0 && (
+          <div className="flex items-center justify-between text-xs text-[#5a4041] mb-1.5">
+            <div className="flex items-center gap-1">
+              <span
+                className="material-symbols-outlined text-amber-500 text-[15px]"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
+                star
+              </span>
+              <span className="font-bold text-[#1e1b19]">{product.rating.toFixed(2)}</span>
+              <span className="text-[#8e7070]">({product.soldCount})</span>
+            </div>
+            <button
+              onClick={() => onOpenDetail(product)}
+              className="text-[11px] font-semibold text-[#b21e36] hover:underline cursor-pointer flex items-center"
             >
-              star
-            </span>
-            <span className="font-bold text-[#1e1b19]">{product.rating.toFixed(2)}</span>
-            <span className="text-[#8e7070]">({product.soldCount})</span>
+              Chi tiết
+              <span className="material-symbols-outlined text-[13px] ml-0.5">arrow_forward</span>
+            </button>
           </div>
-          <button
-            onClick={() => onOpenDetail(product)}
-            className="text-[11px] font-semibold text-[#b21e36] hover:underline cursor-pointer flex items-center"
-          >
-            Chi tiết
-            <span className="material-symbols-outlined text-[13px] ml-0.5">arrow_forward</span>
-          </button>
-        </div>
+        )}
 
         {/* Title */}
         <h3
@@ -122,11 +124,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Price Row */}
         <div className="flex items-baseline gap-2 mb-2.5">
           <span className="text-[19px] font-extrabold text-[#b21e36]">
-            {formatVND(product.price)}
+            {product.priceLabel || formatVND(product.price)}
           </span>
           {product.originalPrice > product.price && (
             <span className="text-xs text-[#8e7070] line-through">
-              {formatVND(product.originalPrice)}
+              {product.originalPriceLabel || formatVND(product.originalPrice)}
             </span>
           )}
         </div>

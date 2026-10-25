@@ -10,6 +10,7 @@ export type BuySource = 'product_card' | 'product_detail' | 'chatbot' | 'wishlis
 const PAGE_INFO: Partial<Record<PageTab, { path: string; title: string }>> = {
   home: { path: '/', title: 'Trang chủ' },
   girlfriend: { path: '/nguoi-yeu', title: 'Quà cho người yêu' },
+  boyfriend: { path: '/qua-cho-ban-trai', title: 'Quà cho người yêu nam' },
   colleague: { path: '/dong-nghiep', title: 'Quà cho đồng nghiệp' },
   parents: { path: '/bo-me', title: 'Quà cho bố mẹ' },
 };

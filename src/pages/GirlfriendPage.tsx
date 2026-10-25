@@ -284,29 +284,28 @@ export const GirlfriendPage: React.FC<GirlfriendPageProps> = ({
           </div>
         </section>
 
-        {/* 3. DANH SÁCH TOP QUÀ TẶNG BÁN CHẠY */}
+        {/* 3. DANH SÁCH GỢI Ý QUÀ TẶNG */}
         <section className="max-w-[1240px] mx-auto px-4 md:px-6 lg:px-8 mb-12">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
             <div>
               <div className="flex items-center gap-1.5 text-[#b21e36] mb-1">
                 <span className="material-symbols-outlined text-[20px]">verified_user</span>
                 <span className="text-xs uppercase tracking-wider font-extrabold">
-                  Chọn lọc kiểm chứng
+                  Danh sách tham khảo
                 </span>
               </div>
               <h2 className="text-2xl md:text-3xl font-extrabold text-[#1e1b19]">
-                Top Quà Tặng Được Nàng "Chấm Điểm 10"
+                Gợi Ý Quà Tặng Cho Bạn Nữ
               </h2>
             </div>
             <div className="flex items-center gap-1.5 text-xs text-[#5a4041]">
-              <span>Sắp xếp theo:</span>
               <span className="px-3 py-1 rounded-full bg-[#faf2ee] font-semibold text-[#1e1b19] border border-[#eee7e3]">
-                Đánh giá cao nhất &amp; Dễ tặng nhất
+                Giá và thông tin có thể thay đổi
               </span>
             </div>
           </div>
 
-          {/* Grid 4 Girlfriend Products */}
+          {/* Girlfriend product grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {girlfriendProducts.map((product) => (
               <ProductCard

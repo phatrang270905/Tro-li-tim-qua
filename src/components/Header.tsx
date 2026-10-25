@@ -22,6 +22,7 @@ export const Header: React.FC<HeaderProps> = ({
   const navItems: { id: PageTab; label: string; icon: string }[] = [
     { id: 'home', label: 'Trang chủ', icon: 'home' },
     { id: 'girlfriend', label: 'Quà Người Yêu / Bạn Gái', icon: 'favorite' },
+    { id: 'boyfriend', label: 'Quà Người Yêu Nam', icon: 'card_giftcard' },
     { id: 'colleague', label: 'Quà Đồng Nghiệp & Sếp', icon: 'business_center' },
     { id: 'parents', label: 'Quà Báo Hiếu Bố Mẹ', icon: 'family_restroom' },
   ];

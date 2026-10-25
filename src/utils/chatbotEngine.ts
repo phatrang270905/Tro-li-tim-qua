@@ -300,6 +300,7 @@ function hasCriteria(p: ParsedMessage): boolean {
 // ==================== 2. CHẤM ĐIỂM SẢN PHẨM ====================
 
 function productGender(product: Product): Gender | undefined {
+  if (product.category === 'boyfriend') return 'male';
   const title = toAccentedText(product.title);
   const female = anyPhrase(title, GENDER_HINTS.female);
   const male = anyPhrase(title, GENDER_HINTS.male);

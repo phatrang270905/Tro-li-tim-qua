@@ -5,6 +5,7 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
 import { GirlfriendPage } from './pages/GirlfriendPage';
+import { BoyfriendPage } from './pages/BoyfriendPage';
 import { ColleaguePage } from './pages/ColleaguePage';
 import { ParentsPage } from './pages/ParentsPage';
 import { ProductDetailModal } from './components/ProductDetailModal';
@@ -125,6 +126,15 @@ export default function App() {
             onOpenDetail={(p) => setSelectedProduct(p)}
             onNavigateTab={handleTabChange}
             onShowToast={showToast}
+          />
+        )}
+
+        {currentTab === 'boyfriend' && (
+          <BoyfriendPage
+            products={PRODUCTS}
+            wishlistIds={wishlistIds}
+            onToggleWishlist={handleToggleWishlist}
+            onOpenDetail={(p) => setSelectedProduct(p)}
           />
         )}
 
