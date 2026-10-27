@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Product } from '../types';
 import { ProductCard } from '../components/ProductCard';
+import { ProductFilterBar } from '../components/ProductFilterBar';
+import {
+  EMPTY_PRODUCT_FILTERS,
+  matchesProductFilters,
+  ProductFilters,
+} from '../utils/productFilters';
 
 interface BoyfriendPageProps {
   products: Product[];
@@ -15,7 +21,13 @@ export const BoyfriendPage: React.FC<BoyfriendPageProps> = ({
   onToggleWishlist,
   onOpenDetail,
 }) => {
-  const boyfriendProducts = products.filter((product) => product.category === 'boyfriend');
+  const [filters, setFilters] = useState<ProductFilters>(EMPTY_PRODUCT_FILTERS);
+  const boyfriendCatalog = products.filter(
+    (product) => product.category === 'boyfriend',
+  );
+  const boyfriendProducts = boyfriendCatalog.filter((product) =>
+    matchesProductFilters(product, filters),
+  );
 
   return (
     <div className="w-full">
@@ -35,17 +47,39 @@ export const BoyfriendPage: React.FC<BoyfriendPageProps> = ({
       </section>
 
       <section className="max-w-[1240px] mx-auto px-4 md:px-6 lg:px-8 pb-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {boyfriendProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              isWishlisted={wishlistIds.has(product.id)}
-              onToggleWishlist={onToggleWishlist}
-              onOpenDetail={onOpenDetail}
-            />
-          ))}
-        </div>
+        <ProductFilterBar
+          products={boyfriendCatalog}
+          filters={filters}
+          onChange={setFilters}
+        />
+        <p className="mb-4 text-sm text-[#5a4041]" aria-live="polite">
+          Hiển thị <strong className="text-[#1e1b19]">{boyfriendProducts.length}</strong>/
+          {boyfriendCatalog.length} sản phẩm
+        </p>
+        {boyfriendProducts.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {boyfriendProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                isWishlisted={wishlistIds.has(product.id)}
+                onToggleWishlist={onToggleWishlist}
+                onOpenDetail={onOpenDetail}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-2xl border border-dashed border-[#e2bebe] bg-white px-5 py-10 text-center">
+            <p className="font-bold text-[#1e1b19]">Chưa có quà phù hợp với bộ lọc này.</p>
+            <button
+              type="button"
+              onClick={() => setFilters(EMPTY_PRODUCT_FILTERS)}
+              className="mt-3 text-sm font-bold text-[#b21e36] underline-offset-2 hover:underline"
+            >
+              Xóa bộ lọc để xem tất cả quà
+            </button>
+          </div>
+        )}
       </section>
     </div>
   );

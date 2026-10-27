@@ -3,6 +3,12 @@ import { Product, PageTab } from '../types';
 import { ProductCard } from '../components/ProductCard';
 import { CARD_WISHES } from '../data/cards';
 import { LogoIcon } from '../components/Logo';
+import { ProductFilterBar } from '../components/ProductFilterBar';
+import {
+  EMPTY_PRODUCT_FILTERS,
+  matchesProductFilters,
+  ProductFilters,
+} from '../utils/productFilters';
 
 interface GirlfriendPageProps {
   products: Product[];
@@ -23,21 +29,51 @@ export const GirlfriendPage: React.FC<GirlfriendPageProps> = ({
 }) => {
   const [activeArchetype, setActiveArchetype] = useState<string>('all');
   const [activeScenario, setActiveScenario] = useState<string | null>(null);
+  const [filters, setFilters] = useState<ProductFilters>(EMPTY_PRODUCT_FILTERS);
+  const girlfriendCatalog = products.filter((p) => p.category === 'girlfriend');
 
-  // Filter girlfriend products based on archetype
-  const girlfriendProducts = products.filter((p) => {
-    if (p.category !== 'girlfriend') return false;
+  const matchesArchetype = (product: Product) => {
     if (activeArchetype === 'langman') {
-      return p.vibes.includes('Lãng mạn & Tinh tế');
+      return product.vibes.includes('Lãng mạn & Tinh tế');
     }
     if (activeArchetype === 'sangchanh') {
-      return p.vibes.includes('Yêu công nghệ & Độc lạ') || p.id === 'matte-lipstick-set';
+      return product.vibes.includes('Yêu công nghệ & Độc lạ');
     }
     if (activeArchetype === 'thucte') {
-      return p.vibes.includes('Thực tế & Tiện ích') || p.vibes.includes('Chill & Chữa lành');
+      return (
+        product.vibes.includes('Thực tế & Tiện ích') ||
+        product.vibes.includes('Chill & Chữa lành')
+      );
     }
     return true;
-  });
+  };
+
+  const matchesScenario = (product: Product) => {
+    if (activeScenario === 'holiday') {
+      return product.occasions.some(
+        (occasion) => occasion.includes('20/10') || occasion.includes('8/3'),
+      );
+    }
+    if (activeScenario === 'apology') {
+      return product.vibes.includes('Lãng mạn & Tinh tế');
+    }
+    if (activeScenario === 'anniversary') {
+      return product.occasions.some((occasion) =>
+        /Valentine|Kỷ niệm/i.test(occasion),
+      );
+    }
+    if (activeScenario === 'birthday') {
+      return product.occasions.some((occasion) => /Sinh nhật/i.test(occasion));
+    }
+    return true;
+  };
+
+  const girlfriendProducts = girlfriendCatalog.filter(
+    (product) =>
+      matchesArchetype(product) &&
+      matchesScenario(product) &&
+      matchesProductFilters(product, filters),
+  );
 
   const handleCopyCard = (cardId: string, text: string) => {
     if (navigator.clipboard) {
@@ -47,21 +83,30 @@ export const GirlfriendPage: React.FC<GirlfriendPageProps> = ({
   };
 
   const handleFilterScenario = (scenario: string) => {
-    setActiveScenario(scenario);
-    if (scenario === 'apology') {
-      onShowToast('Đã chọn: Quà xin lỗi làm lành ngọt ngào');
-    } else if (scenario === 'birthday') {
-      onShowToast('Đã chọn: Quà sinh nhật bạn gái');
-    } else if (scenario === 'anniversary') {
-      onShowToast('Đã chọn: Kỷ niệm ngày yêu');
-    } else {
-      onShowToast('Đã chọn: Quà bất ngờ ngẫu hứng');
-    }
+    const nextScenario = activeScenario === scenario ? null : scenario;
+    setActiveScenario(nextScenario);
+    setFilters((current) => ({ ...current, occasion: 'all' }));
 
-    // Scroll to relevant card
-    const elem = document.getElementById('card-apology-girlfriend');
-    if (elem && scenario === 'apology') {
-      elem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (nextScenario === 'apology') {
+      onShowToast('Đang hiển thị quà mang phong cách lãng mạn, phù hợp để làm lành.');
+    } else if (nextScenario === 'birthday') {
+      onShowToast('Đang lọc quà phù hợp dịp sinh nhật bạn gái.');
+    } else if (nextScenario === 'anniversary') {
+      onShowToast('Đang lọc quà phù hợp dịp kỷ niệm và Valentine.');
+    } else if (nextScenario === 'holiday') {
+      onShowToast('Đang lọc quà phù hợp dịp 20/10 và 8/3.');
+    } else {
+      onShowToast('Đã bỏ lọc tình huống tặng quà.');
+    }
+  };
+
+  const handleProductFiltersChange = (nextFilters: ProductFilters) => {
+    setFilters(nextFilters);
+    if (
+      nextFilters.occasion !== filters.occasion ||
+      Object.values(nextFilters).every((value) => value === 'all')
+    ) {
+      setActiveScenario(null);
     }
   };
 
@@ -300,23 +345,49 @@ export const GirlfriendPage: React.FC<GirlfriendPageProps> = ({
             </div>
             <div className="flex items-center gap-1.5 text-xs text-[#5a4041]">
               <span className="px-3 py-1 rounded-full bg-[#faf2ee] font-semibold text-[#1e1b19] border border-[#eee7e3]">
-                Giá và thông tin có thể thay đổi
+                {girlfriendProducts.length}/{girlfriendCatalog.length} sản phẩm phù hợp
               </span>
             </div>
           </div>
 
+          <ProductFilterBar
+            products={girlfriendCatalog}
+            filters={filters}
+            onChange={handleProductFiltersChange}
+            showVibe={false}
+          />
+
           {/* Girlfriend product grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {girlfriendProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                isWishlisted={wishlistIds.has(product.id)}
-                onToggleWishlist={onToggleWishlist}
-                onOpenDetail={onOpenDetail}
-              />
-            ))}
-          </div>
+          {girlfriendProducts.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {girlfriendProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  isWishlisted={wishlistIds.has(product.id)}
+                  onToggleWishlist={onToggleWishlist}
+                  onOpenDetail={onOpenDetail}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-dashed border-[#e2bebe] bg-white px-5 py-10 text-center">
+              <p className="font-bold text-[#1e1b19]">
+                Chưa có quà phù hợp với các lựa chọn này.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveArchetype('all');
+                  setActiveScenario(null);
+                  setFilters(EMPTY_PRODUCT_FILTERS);
+                }}
+                className="mt-3 text-sm font-bold text-[#b21e36] underline-offset-2 hover:underline"
+              >
+                Xóa bộ lọc để xem tất cả quà
+              </button>
+            </div>
+          )}
         </section>
 
         {/* 4. LỜI KHUYÊN TÂM LÝ & BỘ VĂN MẪU VIẾT THIỆP */}
