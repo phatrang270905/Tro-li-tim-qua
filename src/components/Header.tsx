@@ -36,15 +36,15 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-40 bg-[#fff8f5]/90 backdrop-blur-xl border-b border-[#eee7e3] shadow-xs">
-        <div className="h-20 max-w-[1240px] mx-auto px-4 md:px-6 lg:px-8 flex items-center justify-between gap-4">
+        <div className="h-20 max-w-[1240px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4">
           {/* Logo & Brand Name */}
           <button
             onClick={() => handleNavClick('home')}
-            className="flex items-center gap-2.5 text-left cursor-pointer group transition-transform active:scale-98"
+            className="flex shrink-0 items-center gap-1 sm:gap-2.5 text-left cursor-pointer group transition-transform active:scale-98"
           >
-            <LogoIcon size={38} className="group-hover:scale-105 transition-transform" />
+            <LogoIcon size={38} className="w-7 h-7 sm:w-[38px] sm:h-[38px] group-hover:scale-105 transition-transform" />
             <div className="flex flex-col">
-              <span className="font-extrabold text-[19px] leading-tight text-[#b21e36] tracking-tight group-hover:text-[#d53a4c] transition-colors">
+              <span className="whitespace-nowrap font-extrabold text-sm sm:text-[19px] leading-tight text-[#b21e36] tracking-tight group-hover:text-[#d53a4c] transition-colors">
                 Trợ Lý Tìm Quà
               </span>
               <span className="text-[10px] text-[#5a4041] font-semibold tracking-wider uppercase hidden sm:inline">
@@ -74,12 +74,12 @@ export const Header: React.FC<HeaderProps> = ({
           </nav>
 
           {/* Action Zone */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
+          <div className="flex items-center gap-1 sm:gap-2.5">
             {/* Quick Smart Search Button */}
             <button
               onClick={onOpenSearch}
               title="Tìm kiếm thông minh (20/10, 8/3, 19/11...)"
-              className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white border border-[#eee7e3] text-xs font-bold text-[#5a4041] hover:text-[#b21e36] hover:border-[#b21e36]/30 hover:bg-[#fff5f5] transition-all cursor-pointer shadow-2xs group"
+              className="flex items-center gap-1.5 px-2 sm:px-3 py-2 rounded-full bg-white border border-[#eee7e3] text-xs font-bold text-[#5a4041] hover:text-[#b21e36] hover:border-[#b21e36]/30 hover:bg-[#fff5f5] transition-all cursor-pointer shadow-2xs group"
             >
               <span className="material-symbols-outlined text-[18px] text-[#b21e36] group-hover:scale-110 transition-transform">
                 search

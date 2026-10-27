@@ -1788,30 +1788,4 @@ const catalogProducts: Product[] = [
   },
 ];
 
-const BOYFRIEND_REFERENCE_PRODUCT_IDS = new Set([
-  'male-leather-wallet-engraved',
-  'male-leather-belt',
-  'male-perfume',
-  'male-wristwatch',
-  'male-bluetooth-earbuds',
-  'engraved-thermos',
-  'mens-skincare-set',
-  'mens-electric-shaver',
-  'mechanical-keyboard',
-  'mini-bluetooth-speaker',
-  'couple-hoodie',
-  'mens-engraved-silver-bracelet',
-  'mens-belt-perfume-gift-set',
-  'laptop-backpack',
-  'mini-power-bank',
-]);
-
-export const PRODUCTS: Product[] = [
-  ...catalogProducts,
-  ...catalogProducts.filter((product) => BOYFRIEND_REFERENCE_PRODUCT_IDS.has(product.id)).map((product) => ({
-    ...product,
-    id: `boyfriend-${product.id}`,
-    category: 'boyfriend' as const,
-    recipientTypes: [...new Set([...product.recipientTypes, 'Người yêu (Nam)'])],
-  })),
-];
+export const PRODUCTS: Product[] = catalogProducts;
