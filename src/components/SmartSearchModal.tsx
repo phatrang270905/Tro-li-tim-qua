@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Product } from '../types';
 import { trackSearch } from '../utils/analytics';
 import { performSmartSearch, VIETNAMESE_HOLIDAYS, SearchResultItem } from '../utils/searchEngine';
+import {
+  BUDGET_FILTER_OPTIONS,
+  matchesBudgetFilter,
+  ProductBudgetFilter,
+} from '../utils/productFilters';
 
 interface SmartSearchModalProps {
   isOpen: boolean;
@@ -20,6 +25,7 @@ export const SmartSearchModal: React.FC<SmartSearchModalProps> = ({
 }) => {
   const [query, setQuery] = useState('');
   const [activeHoliday, setActiveHoliday] = useState<string | null>(null);
+  const [budget, setBudget] = useState<ProductBudgetFilter>('all');
 
   // Keyboard shortcut listener: Cmd+K or Ctrl+K
   useEffect(() => {
@@ -38,8 +44,10 @@ export const SmartSearchModal: React.FC<SmartSearchModalProps> = ({
     if (activeHoliday) {
       effectiveQuery = effectiveQuery ? `${effectiveQuery} ${activeHoliday}` : activeHoliday;
     }
-    return performSmartSearch(products, effectiveQuery);
-  }, [products, query, activeHoliday]);
+    return performSmartSearch(products, effectiveQuery).filter(({ product }) =>
+      matchesBudgetFilter(product, budget),
+    );
+  }, [products, query, activeHoliday, budget]);
 
   if (!isOpen) return null;
 
@@ -54,6 +62,7 @@ export const SmartSearchModal: React.FC<SmartSearchModalProps> = ({
   const handleClearAll = () => {
     setQuery('');
     setActiveHoliday(null);
+    setBudget('all');
   };
 
   return (
@@ -103,7 +112,7 @@ export const SmartSearchModal: React.FC<SmartSearchModalProps> = ({
               placeholder="VD: Quà 20/10 bạn gái, quà 19/11 cho chàng, quà 20/11..."
               className="w-full py-2.5 text-sm sm:text-base text-[#1e1b19] placeholder:text-[#8a7273] bg-transparent outline-none font-semibold"
             />
-            {(query || activeHoliday) && (
+            {(query || activeHoliday || budget !== 'all') && (
               <button
                 type="button"
                 onClick={handleClearAll}
@@ -138,6 +147,35 @@ export const SmartSearchModal: React.FC<SmartSearchModalProps> = ({
                   >
                     <span>{h.icon}</span>
                     <span>{h.shortName}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Price Range Pills */}
+          <div className="mt-3">
+            <div className="text-[10px] font-bold uppercase tracking-wider text-[#6b4b4e] mb-1.5 flex items-center gap-1">
+              <span className="material-symbols-outlined text-[13px] text-[#b21e36]">
+                payments
+              </span>
+              Lọc theo mức giá:
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {BUDGET_FILTER_OPTIONS.map((option) => {
+                const isSelected = budget === option.value;
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => setBudget(option.value)}
+                    className={`px-2.5 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer border ${
+                      isSelected
+                        ? 'bg-[#b21e36] text-white border-[#b21e36] shadow-xs'
+                        : 'bg-white hover:bg-[#ffdada] text-[#5a4041] border-[#eee7e3]'
+                    }`}
+                  >
+                    {option.label}
                   </button>
                 );
               })}
@@ -236,6 +274,14 @@ export const SmartSearchModal: React.FC<SmartSearchModalProps> = ({
                 Hãy thử tìm kiếm với từ khóa ngắn gọn hơn hoặc chọn nhanh các ngày lễ nổi bật dưới đây.
               </p>
               <div className="flex flex-wrap justify-center gap-2 mt-4">
+                {budget !== 'all' && (
+                  <button
+                    onClick={() => setBudget('all')}
+                    className="px-3 py-1.5 rounded-full bg-[#b21e36] text-white text-xs font-bold hover:bg-[#d53a4c] transition-colors cursor-pointer"
+                  >
+                    💸 Bỏ lọc giá
+                  </button>
+                )}
                 <button
                   onClick={() => {
                     setQuery('');

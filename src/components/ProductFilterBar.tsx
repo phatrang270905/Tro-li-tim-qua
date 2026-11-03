@@ -1,6 +1,7 @@
 import React from 'react';
 import { Product } from '../types';
 import {
+  BUDGET_FILTER_OPTIONS,
   EMPTY_PRODUCT_FILTERS,
   ProductFilters,
 } from '../utils/productFilters';
@@ -62,11 +63,11 @@ export const ProductFilterBar: React.FC<ProductFilterBarProps> = ({
               })
             }
           >
-            <option value="all">Tất cả mức giá</option>
-            <option value="under-150">Dưới 150.000đ</option>
-            <option value="150-300">150.000đ – dưới 300.000đ</option>
-            <option value="300-500">300.000đ – 500.000đ</option>
-            <option value="over-500">Trên 500.000đ</option>
+            {BUDGET_FILTER_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </select>
         </label>
 
