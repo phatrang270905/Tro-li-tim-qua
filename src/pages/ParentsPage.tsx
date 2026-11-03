@@ -65,8 +65,6 @@ export const ParentsPage: React.FC<ParentsPageProps> = ({
 
     if (selectedHealthNeed === 'xuong-khop') {
       return (
-        p.id === 'neck-massager-6d' ||
-        p.id === 'orthopedic-neck-pillow' ||
         p.id === 'parents-herbal-heating-pillow' ||
         p.id === 'parents-massage-pillow' ||
         p.id === 'parents-massage-machine'
@@ -74,14 +72,11 @@ export const ParentsPage: React.FC<ParentsPageProps> = ({
     }
     if (selectedHealthNeed === 'mat-ngu') {
       return (
-        p.id === 'foot-spa-foldable' ||
-        p.id === 'orthopedic-neck-pillow' ||
         p.id === 'parents-herbal-heating-pillow'
       );
     }
     if (selectedHealthNeed === 'de-khang') {
       return (
-        p.id === 'birdnest-cordyceps-box' ||
         p.id === 'parents-herbal-tea' ||
         p.id === 'parents-ginger-honey' ||
         p.id === 'parents-nam-duoc-bird-nest'

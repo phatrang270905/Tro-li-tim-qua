@@ -22,31 +22,32 @@ export const ColleaguePage: React.FC<ColleaguePageProps> = ({
   const [activeContextTag, setActiveContextTag] = useState<string>('all');
 
   // Filter colleague products
-  const colleagueProducts = products.filter((p) => {
+  const matchesContextTag = (p: Product, tag: string) => {
     if (p.category !== 'colleague') return false;
-    if (activeContextTag === '19-11') {
-      return p.occasions.some((o) => o.includes('19/11')) || p.id === 'men-mini-shaver' || p.id === 'men-leather-wallet-rfid' || p.id === 'thermos-led-smart';
+    if (tag === '19-11') {
+      return p.occasions.some((o) => o.includes('19/11'));
     }
-    if (activeContextTag === '20-11') {
-      return p.occasions.some((o) => o.includes('20/11')) || p.id === 'gold-pen-executive' || p.id === 'silk-scarf-luxury' || p.id === 'herbal-tea-box-luxury';
+    if (tag === '20-11') {
+      return p.occasions.some((o) => o.includes('20/11'));
     }
-    if (activeContextTag === '20-10') {
-      return p.occasions.some((o) => o.includes('20/10')) || p.id === 'silk-scarf-luxury' || p.id === 'herbal-tea-box-luxury';
+    if (tag === '20-10') {
+      return p.occasions.some((o) => o.includes('20/10'));
     }
-    if (activeContextTag === 'farewell') {
-      return p.id === 'thermos-led-smart' || p.id === 'gold-pen-executive';
+    if (tag === 'farewell') {
+      return p.occasions.some((o) => o.includes('Chia tay'));
     }
-    if (activeContextTag === 'promotion') {
-      return p.id === 'gold-pen-executive' || p.id === 'herbal-tea-box-luxury';
+    if (tag === 'promotion') {
+      return p.occasions.some((o) => o.includes('Thăng tiến'));
     }
-    if (activeContextTag === 'boss') {
-      return p.id === 'herbal-tea-box-luxury' || p.id === 'gold-pen-executive';
+    if (tag === 'boss') {
+      return p.occasions.some((o) => o.includes('20/11') || o.includes('Tết'));
     }
-    if (activeContextTag === 'birthday') {
-      return p.id === 'ergonomic-lumbar-cushion' || p.id === 'thermos-led-smart';
+    if (tag === 'birthday') {
+      return p.occasions.some((o) => o.includes('Sinh nhật'));
     }
     return true;
-  });
+  };
+  const colleagueProducts = products.filter((p) => matchesContextTag(p, activeContextTag));
 
   const contextButtons = [
     { id: '19-11', label: '👔 19/11 Quốc Tế Nam Giới', icon: 'male' },
@@ -56,7 +57,7 @@ export const ColleaguePage: React.FC<ColleaguePageProps> = ({
     { id: 'promotion', label: 'Mừng Thăng Tiến Vị Trí', icon: 'trending_up' },
     { id: 'boss', label: 'Tri Ân Sếp & Đối Tác', icon: 'workspace_premium' },
     { id: 'birthday', label: 'Sinh Nhật Bạn Bàn Bên', icon: 'cake' },
-  ];
+  ].filter((btn) => products.some((p) => matchesContextTag(p, btn.id)));
 
   return (
     <div className="w-full">
