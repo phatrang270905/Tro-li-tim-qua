@@ -6,6 +6,15 @@ import {
   performSmartSearch,
   VIETNAMESE_HOLIDAYS,
 } from '../utils/searchEngine';
+import { matchesBudgetFilter, ProductBudgetFilter } from '../utils/productFilters';
+
+// Map the quiz budget label to the shared price-range filter
+const QUIZ_BUDGET_TO_FILTER: Record<string, ProductBudgetFilter> = {
+  'Hạt dẻ (< 150k)': 'under-150',
+  'Vừa vặn (150k - 300k)': '150-300',
+  'Chu đáo (300k - 500k)': '300-500',
+  'Cao cấp (> 500k)': 'over-500',
+};
 
 interface HomePageProps {
   products: Product[];
@@ -140,9 +149,20 @@ export const HomePage: React.FC<HomePageProps> = ({
     return scoredList;
   }, [products, quizState, selectedHolidayFilter, activePersonaFilter, activeContextFilter]);
 
+  const budgetFilter: ProductBudgetFilter =
+    QUIZ_BUDGET_TO_FILTER[quizState.budget] ?? 'all';
+
+  const budgetFilteredResults = useMemo(
+    () =>
+      searchResultsWithReasons.filter(({ product }) =>
+        matchesBudgetFilter(product, budgetFilter),
+      ),
+    [searchResultsWithReasons, budgetFilter],
+  );
+
   const filteredProducts = useMemo(() => {
-    return searchResultsWithReasons.map((item) => item.product);
-  }, [searchResultsWithReasons]);
+    return budgetFilteredResults.map((item) => item.product);
+  }, [budgetFilteredResults]);
 
   const handleSmartSearchSubmit = (query: string) => {
     setQuizState((prev) => ({ ...prev, searchQuery: query }));
@@ -619,9 +639,9 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
 
             {/* Product Grid */}
-            {searchResultsWithReasons.length > 0 ? (
+            {budgetFilteredResults.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {searchResultsWithReasons.slice(0, visibleCount).map(({ product, matchedReason }) => (
+                {budgetFilteredResults.slice(0, visibleCount).map(({ product, matchedReason }) => (
                   <ProductCard
                     key={product.id}
                     product={product}
