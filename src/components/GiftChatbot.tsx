@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Product } from '../types';
 import { trackBuyClick, trackChatbotMessage } from '../utils/analytics';
 import { BotRecommendation, ChatContext, EMPTY_CONTEXT, answerQuestion, greetingReply } from '../utils/chatbotEngine';
+import { AI_CHAT_URL, askAiAgent } from '../utils/n8nChat';
 
 interface GiftChatbotProps {
   products: Product[];
@@ -20,6 +21,8 @@ interface ChatMessage {
 interface ChatSession {
   messages: ChatMessage[];
   context: ChatContext;
+  /** Mã phiên gửi cho AI Agent trên n8n để nó nhớ các câu trước trong cùng cuộc trò chuyện */
+  sessionId: string;
 }
 
 const STORAGE_KEY = 'gift_chatbot_session';
@@ -32,6 +35,7 @@ const createWelcomeSession = (): ChatSession => {
   return {
     messages: [{ id: createId(), role: 'bot', text: welcome.text, quickReplies: welcome.quickReplies }],
     context: welcome.context,
+    sessionId: createId(),
   };
 };
 
@@ -42,7 +46,11 @@ const loadSession = (): ChatSession => {
     if (saved) {
       const parsed = JSON.parse(saved) as ChatSession;
       if (Array.isArray(parsed.messages) && parsed.messages.length && parsed.context) {
-        return { messages: parsed.messages, context: { ...EMPTY_CONTEXT, ...parsed.context } };
+        return {
+          messages: parsed.messages,
+          context: { ...EMPTY_CONTEXT, ...parsed.context },
+          sessionId: parsed.sessionId || createId(),
+        };
       }
     }
   } catch {
@@ -61,6 +69,8 @@ export const GiftChatbot: React.FC<GiftChatbotProps> = ({ products, onOpenDetail
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const typingTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Tăng mỗi lần gửi / xoá chat → câu trả lời AI về muộn của lượt cũ sẽ bị bỏ qua
+  const requestCounter = useRef(0);
 
   useEffect(() => {
     try {
@@ -112,7 +122,11 @@ export const GiftChatbot: React.FC<GiftChatbotProps> = ({ products, onOpenDetail
     setInput('');
     setIsTyping(true);
 
-    typingTimer.current = setTimeout(() => {
+    const requestId = ++requestCounter.current;
+    const isStale = () => requestId !== requestCounter.current;
+
+    // Bộ luật có sẵn trên trình duyệt (dùng khi chưa bật AI hoặc n8n bị lỗi)
+    const replyWithRules = () => {
       setSession((prev) => {
         const reply = answerQuestion(text, products, prev.context);
         const botMessage: ChatMessage = {
@@ -123,10 +137,38 @@ export const GiftChatbot: React.FC<GiftChatbotProps> = ({ products, onOpenDetail
           followUp: reply.followUp,
           quickReplies: reply.quickReplies,
         };
-        return { messages: [...prev.messages, botMessage], context: reply.context };
+        return { ...prev, messages: [...prev.messages, botMessage], context: reply.context };
       });
       setIsTyping(false);
-    }, TYPING_DELAY_MS);
+    };
+
+    if (!AI_CHAT_URL) {
+      typingTimer.current = setTimeout(() => {
+        if (!isStale()) replyWithRules();
+      }, TYPING_DELAY_MS);
+      return;
+    }
+
+    askAiAgent(text, session.sessionId)
+      .then((reply) => {
+        if (isStale()) return;
+        const botMessage: ChatMessage = {
+          id: createId(),
+          role: 'bot',
+          text: reply.text,
+          // Chỉ giữ các món có thật trong danh sách (phòng khi AI bịa mã sản phẩm)
+          recommendations: reply.recommendations.filter((rec) => products.some((p) => p.id === rec.productId)),
+          followUp: reply.followUp,
+          quickReplies: reply.quickReplies,
+        };
+        setSession((prev) => ({ ...prev, messages: [...prev.messages, botMessage] }));
+        setIsTyping(false);
+      })
+      .catch((error) => {
+        if (isStale()) return;
+        console.warn('AI Agent (n8n) không phản hồi, chuyển sang chatbot dự phòng:', error);
+        replyWithRules();
+      });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -136,6 +178,7 @@ export const GiftChatbot: React.FC<GiftChatbotProps> = ({ products, onOpenDetail
 
   const handleClearChat = () => {
     if (typingTimer.current) clearTimeout(typingTimer.current);
+    requestCounter.current++;
     setIsTyping(false);
     setSession(createWelcomeSession());
   };

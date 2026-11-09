@@ -178,6 +178,7 @@ Khi đang chạy `npm run dev`, mỗi lần bạn **lưu file** (`Ctrl + S`) th�
 | Danh sách sản phẩm: tên, giá, ảnh, **link Shopee / TikTok** | `src/data/products.ts` |
 | Tính cách và sở thích mà chatbot hiểu được (khó tính, mê công nghệ…) | `src/data/traits.ts` |
 | Mẫu lời chúc | `src/data/cards.ts` |
+| Bật / sửa chatbot AI (n8n) | Xem hướng dẫn `n8n/HUONG-DAN.md` |
 
 **Ví dụ: đổi link mua của một sản phẩm.** Mở `src/data/products.ts`, tìm dòng:
 

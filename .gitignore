@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Tự sinh khi chạy npm run dev / build (scripts/export-products.ts)
+public/products.json
