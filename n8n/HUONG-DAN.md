@@ -55,7 +55,7 @@ Website ◀──(lời nhắn + mã sản phẩm)──┘
 
 1. Bấm đúp node **Google Gemini Chat Model**.
 2. Ô **Credential to connect with**: chọn **Create new credential**, dán API key ở Bước 2 vào ô **API Key**, rồi bấm **Save**. Thấy báo xanh *Connection tested successfully* là đúng.
-3. Ô **Model**: chọn một model **Flash** mới nhất trong danh sách (nhanh và rẻ). Mặc định là `gemini-2.5-flash`.
+3. Ô **Model**: chọn một model **Flash** mới nhất trong danh sách (nhanh và rẻ). Mặc định là `gemini-3.8-flash`. Nếu n8n báo *"model ... is no longer available"* thì chọn model Flash mới hơn trong danh sách.
 4. Đóng node, bấm **Save** (`Ctrl + S`) để lưu workflow.
 
 ## Bước 5: Chạy thử trên n8n

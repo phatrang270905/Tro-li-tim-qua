@@ -7,7 +7,7 @@ import { BotRecommendation } from './chatbotEngine';
  * (Hoặc đặt biến môi trường VITE_N8N_CHAT_URL, biến này được ưu tiên hơn.)
  * Để trống '' = tắt AI, chatbot dùng bộ luật có sẵn trên trình duyệt như cũ.
  */
-const N8N_CHAT_URL = '';
+const N8N_CHAT_URL = 'https://phatrang.app.n8n.cloud/webhook/tro-li-tim-qua-chat';
 
 export const AI_CHAT_URL: string = (import.meta.env.VITE_N8N_CHAT_URL as string | undefined)?.trim() || N8N_CHAT_URL;
 
