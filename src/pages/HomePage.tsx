@@ -219,20 +219,6 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="max-w-[1080px] mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-10 flex flex-col gap-10">
           {/* Hero Header */}
           <section className="flex flex-col items-center text-center gap-6">
-            {/* Trust Pill */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 shadow-xs border border-[#eee7e3] backdrop-blur-md">
-              <span className="inline-flex w-2 h-2 rounded-full bg-[#ff5722] animate-ping" />
-              <span className="inline-flex w-2 h-2 rounded-full bg-[#ff5722] -ml-4" />
-              <span className="text-xs md:text-sm font-semibold text-[#1e1b19]">
-                50,000+ quà tặng đã ghép đôi chuẩn gu
-              </span>
-              <span className="text-[#8e7070] font-bold">|</span>
-              <span className="text-xs font-bold text-[#b21e36] uppercase tracking-wider flex items-center gap-1">
-                <span className="material-symbols-outlined text-[15px]">verified</span>
-                Shopee Mall &amp; TikTok Shop
-              </span>
-            </div>
-
             {/* Main Headline */}
             <div className="flex flex-col gap-3 max-w-[850px]">
               <h1 className="text-3xl sm:text-4xl md:text-[46px] md:leading-[54px] font-extrabold tracking-tight text-[#1e1b19]">
