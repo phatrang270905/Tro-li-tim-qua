@@ -90,15 +90,6 @@ export const Header: React.FC<HeaderProps> = ({
               </span>
             </button>
 
-            {/* Primary Action Button */}
-            <button
-              onClick={() => handleNavClick('home')}
-              className="hidden sm:inline-flex items-center justify-center px-3.5 py-2 rounded-full bg-[#b21e36] text-white text-xs md:text-sm font-bold shadow-xs hover:bg-[#d53a4c] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer whitespace-nowrap"
-            >
-              <span className="material-symbols-outlined text-[17px] mr-1">auto_awesome</span>
-              Trắc nghiệm 30s
-            </button>
-
             {/* Wishlist Button with Counter */}
             <button
               onClick={onOpenWishlist}
