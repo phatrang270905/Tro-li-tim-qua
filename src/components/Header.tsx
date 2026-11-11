@@ -54,14 +54,14 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-2 min-w-0">
             {navItems.map((item) => {
               const isActive = currentTab === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`px-3.5 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                  className={`px-2.5 xl:px-3.5 py-2 rounded-full text-[13px] xl:text-sm font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer ${
                     isActive
                       ? 'bg-[#ffdada] text-[#b21e36] shadow-xs font-bold'
                       : 'text-[#5a4041] hover:text-[#1e1b19] hover:bg-[#eee7e3]'
@@ -79,15 +79,12 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={onOpenSearch}
               title="Tìm kiếm thông minh (20/10, 8/3, 19/11...)"
-              className="flex items-center gap-1.5 px-2 sm:px-3 py-2 rounded-full bg-white border border-[#eee7e3] text-xs font-bold text-[#5a4041] hover:text-[#b21e36] hover:border-[#b21e36]/30 hover:bg-[#fff5f5] transition-all cursor-pointer shadow-2xs group"
+              className="shrink-0 flex items-center gap-1 px-2.5 py-2 rounded-full bg-white border border-[#eee7e3] text-xs font-bold text-[#5a4041] whitespace-nowrap hover:text-[#b21e36] hover:border-[#b21e36]/30 hover:bg-[#fff5f5] transition-all cursor-pointer shadow-2xs group"
             >
               <span className="material-symbols-outlined text-[18px] text-[#b21e36] group-hover:scale-110 transition-transform">
                 search
               </span>
-              <span className="hidden md:inline">Tìm quà</span>
-              <span className="hidden xl:inline text-[10px] text-[#8a7273] font-normal border border-[#eee7e3] px-1.5 py-0.5 rounded-md bg-[#fbf6f3]">
-                20/10, 8/3...
-              </span>
+              <span className="hidden md:inline lg:hidden xl:inline">Tìm quà</span>
             </button>
 
             {/* Wishlist Button with Counter */}
