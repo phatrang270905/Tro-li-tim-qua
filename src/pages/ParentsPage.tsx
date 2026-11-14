@@ -67,7 +67,9 @@ export const ParentsPage: React.FC<ParentsPageProps> = ({
       return (
         p.id === 'parents-herbal-heating-pillow' ||
         p.id === 'parents-massage-pillow' ||
-        p.id === 'parents-massage-machine'
+        p.id === 'parents-massage-machine' ||
+        p.id === 'parents-knee-massager' ||
+        p.id === 'parents-mugwort-mat'
       );
     }
     if (selectedHealthNeed === 'mat-ngu') {

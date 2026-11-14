@@ -140,16 +140,18 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <span>Xem trên Shopee (Freeship Xtra)</span>
               </a>
 
-              <a
-                href={product.tiktokUrl}
-                onClick={() => trackBuyClick(product, 'tiktok', 'product_detail')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-2.5 px-4 rounded-full bg-[#1e1b19] hover:bg-black text-white text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer"
-              >
-                <span className="material-symbols-outlined text-[18px] text-[#00f2fe]">bolt</span>
-                <span>Săn Flash Sale trên TikTok Shop</span>
-              </a>
+              {product.tiktokUrl && (
+                <a
+                  href={product.tiktokUrl}
+                  onClick={() => trackBuyClick(product, 'tiktok', 'product_detail')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2.5 px-4 rounded-full bg-[#1e1b19] hover:bg-black text-white text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer"
+                >
+                  <span className="material-symbols-outlined text-[18px] text-[#00f2fe]">bolt</span>
+                  <span>Săn Flash Sale trên TikTok Shop</span>
+                </a>
+              )}
 
               <button
                 type="button"

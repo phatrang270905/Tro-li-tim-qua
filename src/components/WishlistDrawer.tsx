@@ -119,16 +119,18 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
                       <span>Shopee</span>
                       <span className="material-symbols-outlined text-[10px]">open_in_new</span>
                     </a>
-                    <a
-                      href={item.tiktokUrl}
-                      onClick={() => trackBuyClick(item, 'tiktok', 'wishlist')}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-2 py-0.5 rounded-full bg-[#1e1b19] text-white text-[10px] font-bold flex items-center gap-1"
-                    >
-                      <span>TikTok</span>
-                      <span className="material-symbols-outlined text-[10px]">open_in_new</span>
-                    </a>
+                    {item.tiktokUrl && (
+                      <a
+                        href={item.tiktokUrl}
+                        onClick={() => trackBuyClick(item, 'tiktok', 'wishlist')}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-2 py-0.5 rounded-full bg-[#1e1b19] text-white text-[10px] font-bold flex items-center gap-1"
+                      >
+                        <span>TikTok</span>
+                        <span className="material-symbols-outlined text-[10px]">open_in_new</span>
+                      </a>
+                    )}
                   </div>
                 </div>
                 <button

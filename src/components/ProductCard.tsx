@@ -161,19 +161,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <span className="material-symbols-outlined text-[14px]">open_in_new</span>
         </a>
 
-        <a
-          href={product.tiktokUrl}
-          onClick={() => trackBuyClick(product, 'tiktok', 'product_card')}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full py-2 px-3 rounded-full bg-[#f4ece8] hover:bg-[#eee7e3] text-[#1e1b19] text-xs font-bold flex items-center justify-between transition-colors active:scale-98"
-        >
-          <span className="flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[16px] text-[#ba0035]">bolt</span>
-            <span>{product.tiktokLabel || 'Mua trên TikTok Shop'}</span>
-          </span>
-          <span className="material-symbols-outlined text-[14px] text-[#8e7070]">chevron_right</span>
-        </a>
+        {product.tiktokUrl && (
+          <a
+            href={product.tiktokUrl}
+            onClick={() => trackBuyClick(product, 'tiktok', 'product_card')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full py-2 px-3 rounded-full bg-[#f4ece8] hover:bg-[#eee7e3] text-[#1e1b19] text-xs font-bold flex items-center justify-between transition-colors active:scale-98"
+          >
+            <span className="flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[16px] text-[#ba0035]">bolt</span>
+              <span>{product.tiktokLabel || 'Mua trên TikTok Shop'}</span>
+            </span>
+            <span className="material-symbols-outlined text-[14px] text-[#8e7070]">chevron_right</span>
+          </a>
+        )}
       </div>
     </article>
   );
