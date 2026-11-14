@@ -147,19 +147,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
       {/* Dual Affiliate CTAs */}
       <div className="flex flex-col gap-2 pt-1 mt-auto">
-        <a
-          href={product.shopeeUrl}
-          onClick={() => trackBuyClick(product, 'shopee', 'product_card')}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full py-2.5 px-3 rounded-full bg-[#ff5722] hover:bg-[#b02f00] text-white text-xs font-bold flex items-center justify-between shadow-xs transition-transform active:scale-98"
-        >
-          <span className="flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[16px]">shopping_bag</span>
-            <span>{product.shopeeLabel || 'Xem giá trên Shopee'}</span>
-          </span>
-          <span className="material-symbols-outlined text-[14px]">open_in_new</span>
-        </a>
+        {product.shopeeUrl && (
+          <a
+            href={product.shopeeUrl}
+            onClick={() => trackBuyClick(product, 'shopee', 'product_card')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full py-2.5 px-3 rounded-full bg-[#ff5722] hover:bg-[#b02f00] text-white text-xs font-bold flex items-center justify-between shadow-xs transition-transform active:scale-98"
+          >
+            <span className="flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[16px]">shopping_bag</span>
+              <span>{product.shopeeLabel || 'Xem giá trên Shopee'}</span>
+            </span>
+            <span className="material-symbols-outlined text-[14px]">open_in_new</span>
+          </a>
+        )}
 
         {product.tiktokUrl && (
           <a

@@ -307,16 +307,18 @@ export const GiftChatbot: React.FC<GiftChatbotProps> = ({ products, onOpenDetail
                                 </div>
                               )}
                               <div className="flex gap-1.5 mt-2">
-                                <a
-                                  href={product.shopeeUrl}
-                                  onClick={() => trackBuyClick(product, 'shopee', 'chatbot')}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="flex-1 py-1.5 px-2 rounded-full bg-[#ff5722] hover:bg-[#b02f00] text-white text-[11px] font-bold flex items-center justify-center gap-1 transition-colors"
-                                >
-                                  <span className="material-symbols-outlined text-[14px]">shopping_bag</span>
-                                  Shopee
-                                </a>
+                                {product.shopeeUrl && (
+                                  <a
+                                    href={product.shopeeUrl}
+                                    onClick={() => trackBuyClick(product, 'shopee', 'chatbot')}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex-1 py-1.5 px-2 rounded-full bg-[#ff5722] hover:bg-[#b02f00] text-white text-[11px] font-bold flex items-center justify-center gap-1 transition-colors"
+                                  >
+                                    <span className="material-symbols-outlined text-[14px]">shopping_bag</span>
+                                    Shopee
+                                  </a>
+                                )}
                                 {product.tiktokUrl && (
                                   <a
                                     href={product.tiktokUrl}

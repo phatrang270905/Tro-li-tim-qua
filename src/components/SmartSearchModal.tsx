@@ -241,9 +241,11 @@ export const SmartSearchModal: React.FC<SmartSearchModalProps> = ({
                         <span className="text-sm sm:text-base font-black text-[#b21e36]">
                           {product.price.toLocaleString('vi-VN')}đ
                         </span>
-                        <span className="text-[11px] text-[#8a7273] line-through">
-                          {product.originalPrice.toLocaleString('vi-VN')}đ
-                        </span>
+                        {product.originalPrice > product.price && (
+                          <span className="text-[11px] text-[#8a7273] line-through">
+                            {product.originalPrice.toLocaleString('vi-VN')}đ
+                          </span>
+                        )}
                       </div>
                       <span className="text-[11px] text-[#5a4041] flex items-center gap-0.5 ml-auto">
                         <span className="material-symbols-outlined text-[13px] text-amber-500 fill-amber-500">

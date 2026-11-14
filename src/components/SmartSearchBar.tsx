@@ -205,9 +205,11 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
                       <span className="text-xs sm:text-sm font-black text-[#b21e36]">
                         {product.price.toLocaleString('vi-VN')}đ
                       </span>
-                      <span className="text-[11px] text-[#8a7273] line-through">
-                        {product.originalPrice.toLocaleString('vi-VN')}đ
-                      </span>
+                      {product.originalPrice > product.price && (
+                        <span className="text-[11px] text-[#8a7273] line-through">
+                          {product.originalPrice.toLocaleString('vi-VN')}đ
+                        </span>
+                      )}
                       <span className="text-[10px] text-[#5a4041] ml-auto flex items-center gap-0.5">
                         <span className="material-symbols-outlined text-[13px] text-amber-500 fill-amber-500">
                           star
